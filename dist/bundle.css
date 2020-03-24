@@ -1,0 +1,94 @@
+.no-animation {
+  animation-duration: 0s !important; }
+
+.carousel {
+  position: relative;
+  height: 100vh;
+  overflow: hidden; }
+  .carousel .left-button,
+  .carousel .right-button {
+    z-index: 3;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); }
+  .carousel .left-button {
+    left: 10px; }
+  .carousel .right-button {
+    right: 10px; }
+  .carousel .items {
+    height: 100%;
+    width: 100%; }
+    .carousel .items.show-left .hide {
+      animation: left 1s;
+      -webkit-animation: left 1s;
+      left: 100vw;
+      z-index: 2; }
+    .carousel .items.show-left .show {
+      z-index: 1; }
+    .carousel .items.show-right .hide {
+      display: block;
+      z-index: 1; }
+    .carousel .items.show-right .show {
+      animation: right 1s;
+      -webkit-animation: right 1s;
+      z-index: 2; }
+    .carousel .items .no-animation ~ .hide {
+      display: none !important; }
+    .carousel .items .carousel-item {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      display: none; }
+      .carousel .items .carousel-item.hide {
+        display: block; }
+      .carousel .items .carousel-item.show {
+        display: block; }
+
+@-webkit-keyframes left {
+  from {
+    left: 0; }
+  to {
+    left: 100vw; } }
+
+@-moz-keyframes left {
+  from {
+    left: 0; }
+  to {
+    left: 100vw; } }
+
+@-ms-keyframes left {
+  from {
+    left: 0; }
+  to {
+    left: 100vw; } }
+
+@keyframes left {
+  from {
+    left: 0; }
+  to {
+    left: 100vw; } }
+
+@-webkit-keyframes right {
+  from {
+    left: 100vw; }
+  to {
+    left: 0; } }
+
+@-moz-keyframes right {
+  from {
+    left: 100vw; }
+  to {
+    left: 0; } }
+
+@-ms-keyframes right {
+  from {
+    left: 100vw; }
+  to {
+    left: 0; } }
+
+@keyframes right {
+  from {
+    left: 100vw; }
+  to {
+    left: 0; } }

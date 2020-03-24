@@ -1,0 +1,110 @@
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+.no-animation {
+  animation-duration: 0s !important;
+}
+
+.carousel {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+
+  .left-button,
+  .right-button {
+    z-index: 3;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+  }
+
+  .left-button {
+    left: 10px;
+  }
+
+  .right-button {
+    right: 10px;
+  }
+
+  .items {
+    height: 100%;
+    width: 100%;
+
+    &.show-left {
+      .hide {
+        animation: left 1s;
+        -webkit-animation: left 1s;
+        left: 100vw;
+        z-index: 2;
+      }
+
+      .show {
+        z-index: 1;
+      }
+    }
+
+    &.show-right {
+      .hide {
+        display: block;
+        z-index: 1;
+      }
+
+      .show {
+        animation: right 1s;
+        -webkit-animation: right 1s;
+        z-index: 2;
+      }
+    }
+
+    .no-animation ~ .hide {
+      display: none !important;
+    }
+
+    .carousel-item {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      display: none;
+
+      &.hide {
+        display: block;
+      }
+
+      &.show {
+        display: block;
+      }
+    }
+  }
+}
+
+@include keyframes(left) {
+  from {
+    left: 0;
+  }
+  to {
+    left: 100vw
+  }
+}
+
+@include keyframes(right) {
+  from {
+    left: 100vw;
+  }
+  to {
+    left: 0
+  }
+}
