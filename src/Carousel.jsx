@@ -15,12 +15,42 @@ const createActiveChildren = (children, showIndex, hideIndex) => {
   });
 };
 
+const useButtonFunc = () => {
+
+}
+
+const useButton = (button, newProps) => {
+  return useMemo(() => {
+    return React.cloneElement(button, {
+      ...newProps,
+      className: 'button',
+      ...button.props
+    }, button.props.children);
+  }, [newProps, button]);
+};
+
 let initLoad = true;
 
 const Carousel = ({ children, leftButton, rightButton, ...props }) => {
   const max = children.length - 1;
   const [status, setStatus] = useState({ active: 0, hide: max, className: 'show-right', animating: false });
   const swiped = useSwipe(() => left(), () => right(), 100);
+  const left = useCallback(() => {
+    console.log("left");
+    const active = status.active === 0 ? max : status.active - 1;
+    onButtonClick(active, 'show-left');
+    initLoad = false;
+  }, [max, status.active]);
+
+  const right = useCallback(() => {
+    console.log('right');
+    const active = status.active === max ? 0 : status.active + 1;
+    onButtonClick(active, 'show-right');
+    initLoad = false;
+  }, [max, status.active]);
+
+  const rightBtn = useButton(rightButton, { onClick: right, disabled: status.animating });
+  const leftBtn = useButton(leftButton, { onClick: left, disabled: status.animating });
 
   const onButtonClick = (active, className) => {
     setStatus(status => {
@@ -33,18 +63,6 @@ const Carousel = ({ children, leftButton, rightButton, ...props }) => {
     });
   };
 
-  const left = useCallback(() => {
-    const active = status.active === 0 ? max : status.active - 1;
-    onButtonClick(active, 'show-left');
-    initLoad = false;
-  }, [max, status.active]);
-
-  const right = useCallback(() => {
-    const active = status.active === max ? 0 : status.active + 1;
-    onButtonClick(active, 'show-right');
-    initLoad = false;
-  }, [max, status.active]);
-
   const disableDisable = () => {
     setStatus(status => {
       return {
@@ -53,15 +71,6 @@ const Carousel = ({ children, leftButton, rightButton, ...props }) => {
       }
     });
   };
-
-  const leftBtn = useMemo(() => {
-    return React.cloneElement(leftButton, { onClick: left, className: 'button', disabled: status.animating }, null)
-  }, [left, leftButton, status.animating]);
-
-  const rightBtn = useMemo(() => {
-    return React.cloneElement(rightButton, { onClick: right, className: 'button', disabled: status.animating }, null)
-  }, [right, rightButton, status.animating]);
-
   return <div className="carousel" {...props} {...swiped}>
     <div className='left-button'>
       {leftBtn}
@@ -76,8 +85,8 @@ const Carousel = ({ children, leftButton, rightButton, ...props }) => {
 };
 
 Carousel.defaultProps = {
-  leftButton: (<button>left</button>),
-  rightButton: (<button>right</button>)
+  leftButton: (<button>{'<'}</button>),
+  rightButton: (<button>{'>'}</button>)
 };
 
 Carousel.propTypes = {

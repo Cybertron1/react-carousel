@@ -4,8 +4,6 @@ import babel from 'rollup-plugin-babel';
 import scss from 'rollup-plugin-scss'
 import minify from 'rollup-plugin-babel-minify';
 import { eslint } from 'rollup-plugin-eslint';
-
-// @ts-ignore
 import pkg from './package.json';
 
 const config = [

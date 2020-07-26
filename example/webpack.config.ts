@@ -15,6 +15,9 @@ module.exports = (env: any): webpack.Configuration => {
       filename: 'bundle.js'
     },
     resolve: {
+      alias: {
+        react: path.resolve('./node_modules/react'),
+      },
       extensions: ['.jsx', '.js']
     },
     module: {
